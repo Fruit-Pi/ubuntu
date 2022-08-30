@@ -85,7 +85,7 @@ chmod +x /etc/rc.local
 export APT_INSTALL="apt-get install -fy --allow-downgrades"
 
 #---------------power management --------------
-\${APT_INSTALL} pm-utils triggerhappy bsdmainutils
+\${APT_INSTALL} pm-utils triggerhappy bsdmainutils ubuntu-gnome-desktop
 cp /etc/Powermanager/triggerhappy.service  /lib/systemd/system/triggerhappy.service
 
 #---------------Rga--------------
@@ -120,7 +120,7 @@ apt-mark hold xserver-common xserver-xorg-core xserver-xorg-legacy
 
 #------------------libdrm------------
 echo -e "\033[36m Install libdrm.................... \033[0m"
-\${APT_INSTALL} /packages/libdrm/*.deb
+#\${APT_INSTALL} /packages/libdrm/*.deb
 
 #------------------libdrm-cursor------------
 echo -e "\033[36m Install libdrm-cursor.................... \033[0m"
@@ -173,9 +173,6 @@ source ~/.bashrc
 
 #ln -sf /usr/bin/startxfce4 /etc/alternatives/x-session-manager
 
-# mark package to hold
-apt list --installed | grep -v oldstable | cut -d/ -f1 | xargs apt-mark hold
-
 #------------------ffmpeg------------
 \${APT_INSTALL} ffmpeg
 \${APT_INSTALL} /packages/ffmpeg/*.deb
@@ -183,6 +180,9 @@ apt list --installed | grep -v oldstable | cut -d/ -f1 | xargs apt-mark hold
 #------------------mpv------------
 \${APT_INSTALL} mpv
 \${APT_INSTALL} /packages/mpv/*.deb
+
+# mark package to hold
+apt list --installed | grep -v oldstable | cut -d/ -f1 | xargs apt-mark hold
 
 #---------------Custom Script--------------
 systemctl mask systemd-networkd-wait-online.service
