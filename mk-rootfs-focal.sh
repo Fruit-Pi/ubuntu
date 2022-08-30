@@ -85,7 +85,8 @@ chmod +x /etc/rc.local
 export APT_INSTALL="apt-get install -fy --allow-downgrades"
 
 #---------------Pre-packages --------------
-\${APT_INSTALL} bsdmainutils ubuntu-gnome-desktop
+\${APT_INSTALL} bsdmainutils ubuntu-gnome-desktop parole
+apt remove -fy firefox
 
 #---------------Rga--------------
 \${APT_INSTALL} /packages/rga/*.deb
@@ -159,11 +160,36 @@ echo -e "\033[36m Install rktoolkit.................... \033[0m"
 \${APT_INSTALL} /packages/ffmpeg/*.deb
 
 #------------------mpv------------
-\${APT_INSTALL} mpv
-\${APT_INSTALL} /packages/mpv/*.deb
+N|apt install -fy mpv
+dpkg -i /packages/mpv/*.deb
+
+cp /packages/libmali/libmali-*-x11*.deb /
+cp -rf /packages/rkaiq/*.deb /
+# reduce 500M size for rootfs
+rm -rf /usr/lib/firmware
 
 # mark package to hold
 #apt list --installed | grep -v oldstable | cut -d/ -f1 | xargs apt-mark hold
+
+#------remove unused packages------------
+apt remove --purge -fy linux-firmware*
+
+#---------------Clean--------------
+   if [ -e "/usr/lib/arm-linux-gnueabihf/dri" ] ;
+    then
+	cd /usr/lib/arm-linux-gnueabihf/dri/
+	cp kms_swrast_dri.so swrast_dri.so rockchip_dri.so /
+	rm /usr/lib/arm-linux-gnueabihf/dri/*.so
+	mv /*.so /usr/lib/arm-linux-gnueabihf/dri/
+    elif [ -e "/usr/lib/aarch64-linux-gnu/dri" ];
+    then
+	cd /usr/lib/aarch64-linux-gnu/dri/
+	cp kms_swrast_dri.so swrast_dri.so rockchip_dri.so /
+	rm /usr/lib/aarch64-linux-gnu/dri/*.so
+	mv /*.so /usr/lib/aarch64-linux-gnu/dri/
+	rm /etc/profile.d/qt.sh
+fi
+cd -
 
 #---------------Custom Script--------------
 systemctl mask systemd-networkd-wait-online.service
@@ -172,6 +198,8 @@ rm /lib/systemd/system/wpa_supplicant@.service
 
 #---------------Clean--------------
 rm -rf /var/lib/apt/lists/*
+rm -rf /var/cache/                                                                                                               
+rm -rf /packages/
 
 EOF
 
