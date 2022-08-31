@@ -39,7 +39,7 @@ install_mali() {
             ;;
     esac
 
-    apt install -f /packages/libmali/libmali-*$MALI*-x11*.deb
+    apt install -f /libmali-*$MALI*-x11*.deb
 }
 
 

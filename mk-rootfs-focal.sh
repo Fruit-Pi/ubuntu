@@ -159,17 +159,10 @@ echo -e "\033[36m Install rktoolkit.................... \033[0m"
 \${APT_INSTALL} ffmpeg
 \${APT_INSTALL} /packages/ffmpeg/*.deb
 
-#------------------mpv------------
-N|apt install -fy mpv
-dpkg -i /packages/mpv/*.deb
-
 cp /packages/libmali/libmali-*-x11*.deb /
 cp -rf /packages/rkaiq/*.deb /
 # reduce 500M size for rootfs
 rm -rf /usr/lib/firmware
-
-# mark package to hold
-#apt list --installed | grep -v oldstable | cut -d/ -f1 | xargs apt-mark hold
 
 #------remove unused packages------------
 apt remove --purge -fy linux-firmware*
@@ -191,6 +184,10 @@ apt remove --purge -fy linux-firmware*
 fi
 cd -
 
+#------------------mpv------------
+no|apt install -fy mpv
+dpkg -i /packages/mpv/*.deb
+
 #---------------Custom Script--------------
 systemctl mask systemd-networkd-wait-online.service
 systemctl mask NetworkManager-wait-online.service
@@ -200,6 +197,9 @@ rm /lib/systemd/system/wpa_supplicant@.service
 rm -rf /var/lib/apt/lists/*
 rm -rf /var/cache/                                                                                                               
 rm -rf /packages/
+
+# mark package to hold
+#apt list --installed | grep -v oldstable | cut -d/ -f1 | xargs apt-mark hold
 
 EOF
 
