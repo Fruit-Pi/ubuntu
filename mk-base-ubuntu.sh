@@ -52,7 +52,7 @@ export APT_INSTALL="apt-get install -fy --allow-downgrades"
 apt-get -y update
 apt-get -f -y upgrade
 
-apt install -y gnome-session gdm3 ubuntu-desktop 
+apt install -y gnome-session gdm3 ubuntu-desktop bsdmainutils ubuntu-gnome-desktop parole
 apt install -y sudo rsyslog wget gdb net-tools inetutils-ping openssh-server ifupdown alsa-utils python vim ntp git libssl-dev vsftpd tcpdump can-utils i2c-tools strace network-manager onboard evtest
 
 apt install -y blueman

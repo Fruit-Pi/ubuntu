@@ -85,8 +85,7 @@ chmod +x /etc/rc.local
 export APT_INSTALL="apt-get install -fy --allow-downgrades"
 
 #---------------Pre-packages --------------
-\${APT_INSTALL} bsdmainutils ubuntu-gnome-desktop parole
-apt remove -fy firefox
+apt remove -fy firefox totem
 
 #---------------Rga--------------
 \${APT_INSTALL} /packages/rga/*.deb
@@ -122,7 +121,7 @@ apt-mark hold xserver-xorg-core
 
 #------------------libdrm------------
 echo -e "\033[36m Install libdrm.................... \033[0m"
-#\${APT_INSTALL} /packages/libdrm/*.deb
+\${APT_INSTALL} /packages/libdrm/*.deb
 
 #------------------libdrm-cursor------------
 echo -e "\033[36m Install libdrm-cursor.................... \033[0m"
@@ -156,8 +155,10 @@ echo -e "\033[36m Install rktoolkit.................... \033[0m"
 \${APT_INSTALL} /packages/rktoolkit/*.deb
 
 #------------------ffmpeg------------
-\${APT_INSTALL} ffmpeg
 \${APT_INSTALL} /packages/ffmpeg/*.deb
+
+#------------------mpv------------
+\${APT_INSTALL} /packages/mpv/*.deb
 
 cp /packages/libmali/libmali-*-x11*.deb /
 cp -rf /packages/rkaiq/*.deb /
@@ -183,10 +184,6 @@ apt remove --purge -fy linux-firmware*
 	rm /etc/profile.d/qt.sh
 fi
 cd -
-
-#------------------mpv------------
-no|apt install -fy mpv
-dpkg -i /packages/mpv/*.deb
 
 #---------------Custom Script--------------
 systemctl mask systemd-networkd-wait-online.service
