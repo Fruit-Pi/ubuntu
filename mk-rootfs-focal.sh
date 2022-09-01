@@ -187,6 +187,9 @@ apt remove --purge -fy linux-firmware*
 fi
 cd -
 
+# mark package to hold
+apt list --installed | grep -v oldstable | cut -d/ -f1 | xargs apt-mark hold
+
 #---------------Custom Script--------------
 systemctl mask systemd-networkd-wait-online.service
 systemctl mask NetworkManager-wait-online.service
@@ -196,9 +199,6 @@ rm /lib/systemd/system/wpa_supplicant@.service
 rm -rf /var/lib/apt/lists/*
 rm -rf /var/cache/                                                                                                               
 rm -rf /packages/
-
-# mark package to hold
-#apt list --installed | grep -v oldstable | cut -d/ -f1 | xargs apt-mark hold
 
 EOF
 
