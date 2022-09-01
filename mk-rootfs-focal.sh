@@ -71,6 +71,7 @@ elif [ "$ARCH" == "arm64"  ]; then
 fi
 
 sudo cp -f /etc/resolv.conf $TARGET_ROOTFS_DIR/etc/
+sudo cp -f sources.list $TARGET_ROOTFS_DIR/etc/apt/
 
 sudo mount -o bind /dev $TARGET_ROOTFS_DIR/dev
 
@@ -159,6 +160,7 @@ echo -e "\033[36m Install rktoolkit.................... \033[0m"
 
 #------------------mpv------------
 \${APT_INSTALL} /packages/mpv/*.deb
+mv /etc/mpv/mpv-rk.conf /etc/mpv/mpv.conf
 
 cp /packages/libmali/libmali-*-x11*.deb /
 cp -rf /packages/rkaiq/*.deb /
